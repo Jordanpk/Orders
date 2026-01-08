@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Orders.Backend.UnitsOfWork.Interfaces;
+using Orders.Shared.DTOs;
 
 namespace Orders.Backend.Controllers;
 
@@ -11,6 +12,30 @@ public class GenericController<T> : Controller where T : class
     {
         _unitOfWork = unitOfWork;
     }
+
+    [HttpGet("paginated")]
+    public virtual async Task<IActionResult> GetAsync([FromQuery] PaginationDTO pagination)
+    {
+        var action = await _unitOfWork.GetAsync(pagination);
+        if (action.WasSuccess)
+        {
+            return Ok(action.Result);
+        }
+        return BadRequest(action.Message);
+    }
+
+    [HttpGet("totalRecords")]
+    public virtual async Task<IActionResult> GetTotalRecordsAsync([FromQuery] PaginationDTO pagination)
+    {
+        var action = await _unitOfWork.GetTotalRecordsAsync(pagination);
+        if (action.WasSuccess)
+        {
+            return Ok(action.Result);
+        }
+        return BadRequest(action.Message);
+    }
+
+
 
     [HttpGet]
     public virtual async Task<IActionResult> GetAsync()
