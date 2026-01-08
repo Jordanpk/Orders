@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Orders.Backend.Data;
 using Orders.Backend.Repository.Interfaces;
-using Orders.Shared.Entities.Responses;
+using Orders.Shared.Responses;
 
 namespace Orders.Backend.Repositories.Implementations;
 
-public class GenericRepositories<T> : IGenericRepository<T> where T : class
+public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     private readonly DataContext _context;
     private readonly DbSet<T> _entity;
 
-    public GenericRepositories(DataContext context)
+    public GenericRepository(DataContext context)
     {
         _context = context;
         _entity = context.Set<T>();

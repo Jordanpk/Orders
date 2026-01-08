@@ -1,18 +1,17 @@
-﻿using Orders.Shared.Entities.Responses;
+﻿using Orders.Shared.Responses;
 
-namespace Orders.Backend.Repository.Interfaces
+namespace Orders.Backend.Repository.Interfaces;
+
+public interface IGenericRepository<T> where T : class
 {
-    public interface IGenericRepository<T> where T : class
-    {
-        Task<ActionResponse<T>> GetAsync(int id);
+    Task<ActionResponse<T>> GetAsync(int id);
 
-        Task<ActionResponse<IEnumerable<T>>> GetAsync();
+    Task<ActionResponse<IEnumerable<T>>> GetAsync();
 
-        Task<ActionResponse<T>> AddAsync(T entity);
+    Task<ActionResponse<T>> AddAsync(T entity);
 
-        Task<ActionResponse<T>> DeleteAsync(int id);
+    Task<ActionResponse<T>> DeleteAsync(int id);
 
-        Task<ActionResponse<T>> UpdateAsync(T entity);
+    Task<ActionResponse<T>> UpdateAsync(T entity);
 
-    }
 }

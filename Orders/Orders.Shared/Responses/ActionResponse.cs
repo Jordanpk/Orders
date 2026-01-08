@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Orders.Shared.Entities.Responses
+namespace Orders.Shared.Responses
 {
     public class ActionResponse<T>
     {

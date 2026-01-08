@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Orders.Backend.Data;
+using Orders.Backend.UnitsOfWork.Implementations;
 using Orders.Backend.UnitsOfWork.Interfaces;
 using Orders.Shared.Entities;
 
@@ -9,19 +7,19 @@ namespace Orders.Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CountriesController : GenericController<Country>
+public class StatesController : GenericController<State>
 {
-    private readonly ICountriesUnitOfwork _countriesUnitOfwork;
+    private readonly IStatesUnitOfwork _statesUnitOfwork;
 
-    public CountriesController(IGenericUnitOfWork<Country> unitOfWork, ICountriesUnitOfwork countriesUnitOfwork) : base(unitOfWork)
+    public StatesController(IGenericUnitOfWork<State> unitOfWork, IStatesUnitOfwork statesUnitOfwork) : base(unitOfWork)
     {
-        _countriesUnitOfwork = countriesUnitOfwork;
+        _statesUnitOfwork = statesUnitOfwork;
     }
 
     [HttpGet]
     public override async Task<IActionResult> GetAsync()
     {
-        var action = await _countriesUnitOfwork.GetAsync();
+        var action = await _statesUnitOfwork.GetAsync();
         if (action.WasSuccess)
         {
             return Ok(action.Result);
@@ -32,7 +30,7 @@ public class CountriesController : GenericController<Country>
     [HttpGet("{id}")]
     public override async Task<IActionResult> GetAsync(int id)
     {
-        var action = await _countriesUnitOfwork.GetAsync(id);
+        var action = await _statesUnitOfwork.GetAsync(id);
         if (action.WasSuccess)
         {
             return Ok(action.Result);
