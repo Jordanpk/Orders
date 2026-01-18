@@ -17,12 +17,25 @@ namespace Orders.Backend.Repositories.Implementations
             _context = context;
         }
 
+        public async Task<IEnumerable<State>> GetComboAsync(int countryId)
+        {
+            return await _context.States
+                .Where(s => s.CountryId == countryId)
+                .OrderBy(s => s.Name)
+                .ToListAsync();
+        }
         public override async Task<ActionResponse<IEnumerable<State>>> GetAsync(PaginationDTO pagination)
         {
             var queryable = _context.States
                 .Include(s => s.Cities)
                 .Where(s => s.Country!.Id == pagination.Id)
                 .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.Name.Contains(pagination.Filter, StringComparison.CurrentCultureIgnoreCase));
+            }
+
             return new ActionResponse<IEnumerable<State>>
             {
                 WasSuccess = true,
@@ -37,8 +50,14 @@ namespace Orders.Backend.Repositories.Implementations
         public override async Task<ActionResponse<int>> GetTotalRecordsAsync(PaginationDTO pagination)
         {
             var queryable = _context.States
-                .Where(s => s.Country!.Id == pagination.Id)
+                .Where(x => x.Country!.Id == pagination.Id)
                 .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.Name.Contains(pagination.Filter, StringComparison.CurrentCultureIgnoreCase));
+            }
+
             double count = await queryable.CountAsync();
             return new ActionResponse<int>
             {

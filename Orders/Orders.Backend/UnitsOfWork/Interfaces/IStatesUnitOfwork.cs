@@ -4,7 +4,7 @@ using Orders.Shared.Responses;
 
 namespace Orders.Backend.UnitsOfWork.Interfaces
 {
-    public interface IStatesUnitOfwork
+    public interface IStatesUnitOfWork
     {
         Task<ActionResponse<IEnumerable<State>>> GetAsync(PaginationDTO pagination);
         Task<ActionResponse<int>> GetTotalRecordsAsync(PaginationDTO pagination);

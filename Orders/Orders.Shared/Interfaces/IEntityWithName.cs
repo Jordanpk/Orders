@@ -3,5 +3,5 @@ namespace Orders.Shared.Interfaces;
 
 public interface IEntityWithName
 {
-    string Name { get; }
+    string Name { get; set; }
 }

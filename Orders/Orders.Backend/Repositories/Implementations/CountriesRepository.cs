@@ -22,6 +22,11 @@ namespace Orders.Backend.Repositories.Implementations
             var queryable =  _context.Countries
                 .Include(c => c.States)
                 .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains(pagination.Filter));
+            }
             return new ActionResponse<IEnumerable<Country>>
             {
                 WasSuccess = true,
@@ -33,6 +38,22 @@ namespace Orders.Backend.Repositories.Implementations
             };
         }
 
+        public override async Task<ActionResponse<int>> GetTotalRecordsAsync(PaginationDTO pagination)
+        {
+            var queryable = _context.Countries.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains(pagination.Filter));
+            }
+
+            double count = await queryable.CountAsync();
+            return new ActionResponse<int>
+            {
+                WasSuccess = true,
+                Result = (int)count
+            };
+        }
         public override async Task<ActionResponse<IEnumerable<Country>>> GetAsync()
         {
             var countries = await _context.Countries

@@ -10,9 +10,9 @@ namespace Orders.Backend.Controllers;
 [Route("api/[controller]")]
 public class StatesController : GenericController<State>
 {
-    private readonly IStatesUnitOfwork _statesUnitOfwork;
+    private readonly IStatesUnitOfWork _statesUnitOfwork;
 
-    public StatesController(IGenericUnitOfWork<State> unitOfWork, IStatesUnitOfwork statesUnitOfwork) : base(unitOfWork)
+    public StatesController(IGenericUnitOfWork<State> unitOfWork, IStatesUnitOfWork statesUnitOfwork) : base(unitOfWork)
     {
         _statesUnitOfwork = statesUnitOfwork;
     }

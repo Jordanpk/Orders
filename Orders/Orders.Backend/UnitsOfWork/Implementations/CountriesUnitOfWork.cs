@@ -11,6 +11,7 @@ public class CountriesUnitOfWork : GenericUnitOfWork<Country>, ICountriesUnitOfw
 {
     private readonly ICountriesRepository _countriesRepository;
 
+    public override async Task<ActionResponse<int>> GetTotalRecordsAsync(PaginationDTO pagination) => await _countriesRepository.GetTotalRecordsAsync(pagination);
     public CountriesUnitOfWork(IGenericRepository<Country> repository, ICountriesRepository countriesRepository) : base(repository)
     {
 

@@ -25,10 +25,13 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof
 builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
 builder.Services.AddScoped<IStatesRepository, StatesRepository>();
 builder.Services.AddScoped<ICitiesRepository, CitiesRepository>();
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+
 
 builder.Services.AddScoped<ICountriesUnitOfwork, CountriesUnitOfWork>();
-builder.Services.AddScoped<IStatesUnitOfwork, StatesUnitOfWork>();
+builder.Services.AddScoped<IStatesUnitOfWork, StatesUnitOfWork>();
 builder.Services.AddScoped<ICitiesUnitOfWork, CitiesUnitOfWork>();
+builder.Services.AddScoped<ICategoriesUnitOfWork, CategoriesUnitOfWork>();
 
 //Necesario en .Net10 para que no fallen los parametros de ruta
 builder.Services.ConfigureHttpJsonOptions(options =>
