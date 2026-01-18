@@ -102,11 +102,11 @@ public partial class CategoriesIndex
             var parameters = new DialogParameters
             {
                 { "Id", id }
-            }; dialog = await DialogService.ShowAsync<CategoryEdit>("Editar categor�a", parameters, options);
+            }; dialog = await DialogService.ShowAsync<CategoryEdit>("Editar categoría", parameters, options);
         }
         else
         {
-            dialog = await DialogService.ShowAsync<CategoryCreate>("Nuevo categor�a", options);
+            dialog = await DialogService.ShowAsync<CategoryCreate>("Nuevo categoría", options);
         }
 
         var result = await dialog.Result;
@@ -121,10 +121,10 @@ public partial class CategoriesIndex
     {
         var parameters = new DialogParameters
         {
-            { "Message", $"Estas seguro de borrar la categor�a: {category.Name}" }
+            { "Message", $"Estas seguro de borrar la categoría: {category.Name}" }
         };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall, CloseOnEscapeKey = true };
-        var dialog = await DialogService.ShowAsync<ConfirmDialog>("Confirmaci�n", parameters, options);
+        var dialog = await DialogService.ShowAsync<ConfirmDialog>("Confirmación", parameters, options);
         var result = await dialog.Result;
         if (result!.Canceled)
         {
