@@ -49,7 +49,7 @@ public class CategoriesRepository : GenericRepository<Category>, ICategoriesRepo
 
         if (!string.IsNullOrWhiteSpace(pagination.Filter))
         {
-            queryable = queryable.Where(x => x.Name.Contains(pagination.Filter, StringComparison.OrdinalIgnoreCase));
+            queryable = queryable.Where(x => x.Name.ToLower().Contains(pagination.Filter));
         }
 
         try
