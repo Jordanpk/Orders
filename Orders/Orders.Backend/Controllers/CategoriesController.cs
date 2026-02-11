@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orders.Backend.UnitsOfWork.Interfaces;
 using Orders.Shared.DTOs;
@@ -7,6 +8,7 @@ using Orders.Shared.Entities;
 namespace Orders.Backend.Controllers;
 
 [ApiController]
+//[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("api/[controller]")]
 public class CategoriesController : GenericController<Category>
 {
@@ -44,5 +46,18 @@ public class CategoriesController : GenericController<Category>
             return Ok(action.Result);
         }
         return BadRequest();
+    }
+
+    
+    [HttpGet("debug-auth")]
+    public IActionResult DebugAuth()
+    {
+        return Ok(new
+        {
+            IsAuthenticated = User.Identity?.IsAuthenticated,
+            Claims = User.Claims.Select(c => new { c.Type, c.Value }),
+            AuthHeader = Request.Headers.Authorization.ToString()
+        });
+
     }
 }
